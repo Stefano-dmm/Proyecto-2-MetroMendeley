@@ -1,0 +1,1 @@
+inv1 => Título: Impacto de la IA en la sociedad, Autor: Jane Doe, Palabras Claves: IA, sociedad, tecnología, Puntero al Archivo: path/al/archivo

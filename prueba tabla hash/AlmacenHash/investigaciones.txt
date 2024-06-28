@@ -1,0 +1,1 @@
+libroPrueba => Título: Introducción a la Programación, Autor: Juan Pérez, Palabras Claves: programación, introducción, educación, Puntero al Archivo: /ruta/al/libroPrueba.pdf
