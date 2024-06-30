@@ -3,7 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Main.java to edit this template
  */
 package prueba.tabla.hash;
+import javax.swing.JOptionPane;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -15,12 +18,13 @@ import java.util.stream.Collectors;
 
 public class TablaHash {
     private Map<String, String> tablaInvestigaciones;
-    private final String nombreArchivo = "investigaciones.txt";
+    private final String nombreArchivo = "tablaHash.txt";
     private final Path path = Paths.get("AlmacenHash");
 
     public TablaHash() {
         this.tablaInvestigaciones = new HashMap<>();
         crearDirectorioSiNoExiste();
+        cargarInvestigacionesDesdeTxt();
     }
 
     private void crearDirectorioSiNoExiste() {
@@ -33,19 +37,40 @@ public class TablaHash {
         }
     }
 
-    public void agregarInvestigacion(String clave, String titulo, String autor, String palabrasClaves, String punteroArchivo) {
-        String valor = String.format("Título: %s, Autor: %s, Palabras Claves: %s, Puntero al Archivo: %s", titulo, autor, palabrasClaves, punteroArchivo);
-        tablaInvestigaciones.put(clave, valor);
-        guardarInvestigacionesEnTxt();
-        imprimirInvestigaciones();
+    private void cargarInvestigacionesDesdeTxt() {
+        try (BufferedReader br = new BufferedReader(new FileReader(path.resolve(nombreArchivo).toString()))) {
+            String linea;
+            while ((linea = br.readLine()) != null) {
+                String[] partes = linea.split(" => ", 2);
+                if (partes.length == 2) {
+                    tablaInvestigaciones.put(partes[0], partes[1]);
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error al leer el archivo: " + e.getMessage());
+        }
     }
 
-    private void guardarInvestigacionesEnTxt() {
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path.resolve(nombreArchivo).toString()))) {
-            for (Map.Entry<String, String> entrada : tablaInvestigaciones.entrySet()) {
-                bw.write(entrada.getKey() + " => " + entrada.getValue());
-                bw.newLine();
-            }
+    public void agregarInvestigacion(String clave, String titulo, String autor, String palabrasClaves, String punteroArchivo) {
+        // Verificar si ya existe una investigación con el mismo título y autor
+        boolean existe = tablaInvestigaciones.values().stream()
+                .anyMatch(valor -> valor.contains("Título: " + titulo) && valor.contains("Autor: " + autor));
+
+        if (existe) {
+            // Mostrar ventana de diálogo
+            JOptionPane.showMessageDialog(null, "Archivo con Título: " + titulo + " y Autor: " + autor + " ya existente.");
+        } else {
+            String valor = String.format("Título: %s, Autor: %s, Palabras Claves: %s, Puntero al Archivo: %s", titulo, autor, palabrasClaves, punteroArchivo);
+            tablaInvestigaciones.put(clave, valor);
+            guardarInvestigacionesEnTxt(clave, valor);
+            imprimirInvestigaciones();
+        }
+    }
+
+    private void guardarInvestigacionesEnTxt(String clave, String valor) {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path.resolve(nombreArchivo).toString(), true))) {
+            bw.write(clave + " => " + valor);
+            bw.newLine();
         } catch (IOException e) {
             System.out.println("Error al escribir en el archivo: " + e.getMessage());
         }
@@ -62,7 +87,7 @@ public class TablaHash {
                 .filter(entry -> entry.getValue().toLowerCase().contains(criterio.toLowerCase()))
                 .map(Map.Entry::getValue)
                 .collect(Collectors.joining("\n"));
-        
+
         System.out.println("Resultados de la búsqueda:\n" + resultados);
         return resultados;
     }

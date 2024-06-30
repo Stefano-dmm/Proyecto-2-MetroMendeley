@@ -10,17 +10,13 @@ package prueba.tabla.hash;
  */
 public class main {
     public static void main(String[] args) {
-        TablaHash tabla = new TablaHash();
+        // Crear una instancia de la tabla hash
+        TablaHash tablaHash = new TablaHash();
         
-        // Agregar un libro de prueba
-        tabla.agregarInvestigacion("libroPrueba", "Introducción a la Programación", "Juan Pérez", "programación, introducción, educación", "/ruta/al/libroPrueba.pdf");
+        // Crear una instancia de SubirArchivo pasando la tabla hash
+        SubirArchivo subirArchivo = new SubirArchivo(tablaHash);
         
-        // Imprimir todas las investigaciones para verificar
-        System.out.println("Libro de prueba agregado:");
-        tabla.imprimirInvestigaciones();
-        
-        // Buscar el libro de prueba por un criterio específico, por ejemplo, "programación"
-        System.out.println("\nBuscando investigaciones que contienen 'programación':");
-        tabla.buscarInvestigacionPorCriterio("programación");
+        // Llamar al método subir para iniciar el proceso de subida de archivo
+        subirArchivo.subir();
     }
 }
