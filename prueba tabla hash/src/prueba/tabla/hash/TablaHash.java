@@ -91,6 +91,44 @@ public class TablaHash {
         System.out.println("Resultados de la búsqueda:\n" + resultados);
         return resultados;
     }
+    
+    public void eliminarInvestigacion(String clave) {
+        if (tablaInvestigaciones.containsKey(clave)) {
+            String detallesInvestigacion = tablaInvestigaciones.get(clave);
+            // Suponiendo que la ruta del archivo es el último elemento después de dividir la cadena por ","
+            String[] partes = detallesInvestigacion.split(",");
+            String rutaArchivo = partes[partes.length - 1].trim(); // Asegúrate de que este índice corresponda a la ruta del archivo en tu estructura de datos
+    
+            // Corrección: Eliminar cualquier prefijo no deseado de la ruta del archivo
+            rutaArchivo = rutaArchivo.replace("Puntero al Archivo: ", "").trim();
+    
+            try {
+                Files.deleteIfExists(Paths.get(rutaArchivo));
+                System.out.println("Archivo de investigación eliminado con éxito.");
+            } catch (IOException e) {
+                System.out.println("Error al eliminar el archivo de investigación: " + e.getMessage());
+                return; // No continuar si falla la eliminación del archivo
+            }
+    
+            tablaInvestigaciones.remove(clave);
+            System.out.println("Investigación eliminada con éxito.");
+            actualizarArchivoDeInvestigaciones();
+        } else {
+            System.out.println("La investigación con la clave proporcionada no existe.");
+        }
+    }
+
+    private void actualizarArchivoDeInvestigaciones() {
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter(path.resolve(nombreArchivo).toString()))) {
+            for (Map.Entry<String, String> entrada : tablaInvestigaciones.entrySet()) {
+                bw.write(entrada.getKey() + " => " + entrada.getValue());
+                bw.newLine();
+            }
+        } catch (IOException e) {
+            System.out.println("Error al actualizar el archivo: " + e.getMessage());
+        }
+    }
+    
 }
 
 /*

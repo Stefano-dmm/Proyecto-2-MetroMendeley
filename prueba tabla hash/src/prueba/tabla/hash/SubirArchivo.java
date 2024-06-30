@@ -5,19 +5,16 @@
 package prueba.tabla.hash;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
-
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 
 public class SubirArchivo {
-
-    private TablaHash tablaHash;
-
-    public SubirArchivo(TablaHash tablaHash) {
-        this.tablaHash = tablaHash;
-    }
+    TablaHash tablaHash = new TablaHash(); // Asegúrate de tener esta clase definida en tu proyecto
 
     public void subir() {
         JFileChooser fileChooser = new JFileChooser();
@@ -44,8 +41,8 @@ public class SubirArchivo {
                 Path archivoDestino = almacenPath.resolve(nombreArchivo);
                 Files.copy(Paths.get(rutaArchivo), archivoDestino, StandardCopyOption.REPLACE_EXISTING);
 
-                // Usar el nombre del archivo como clave
-                String clave = nombreArchivo;
+                // Extraer el nombre del archivo sin la extensión .txt
+                String clave = nombreArchivo.substring(0, nombreArchivo.lastIndexOf('.'));
 
                 // Llamar al método agregarInvestigacion con los parámetros actualizados
                 tablaHash.agregarInvestigacion(clave, nombreArchivo, autor, palabrasClavesStr, archivoDestino.toString());
@@ -53,5 +50,11 @@ public class SubirArchivo {
                 JOptionPane.showMessageDialog(null, "Error al procesar el archivo: " + e.getMessage());
             }
         }
+    }
+
+    // Método main para probar la funcionalidad
+    public static void main(String[] args) {
+        SubirArchivo uploader = new SubirArchivo();
+        uploader.subir();
     }
 }

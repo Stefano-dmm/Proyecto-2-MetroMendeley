@@ -10,13 +10,7 @@ package prueba.tabla.hash;
  */
 public class main {
     public static void main(String[] args) {
-        // Crear una instancia de la tabla hash
-        TablaHash tablaHash = new TablaHash();
-        
-        // Crear una instancia de SubirArchivo pasando la tabla hash
-        SubirArchivo subirArchivo = new SubirArchivo(tablaHash);
-        
-        // Llamar al método subir para iniciar el proceso de subida de archivo
-        subirArchivo.subir();
-    }
+    SubirArchivo uploader = new SubirArchivo();
+    uploader.subir();
+}
 }

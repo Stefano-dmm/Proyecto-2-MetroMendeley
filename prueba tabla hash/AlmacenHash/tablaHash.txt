@@ -1,2 +1,2 @@
 libroPrueba2 => Título: Introducción a la Programación2, Autor: Juan Pérez gimenes, Palabras Claves: programación, introducción, educación, Puntero al Archivo: /ruta/al/libroPrueba.pdf
-prueba.txt => Título: prueba.txt, Autor: yo, Palabras Claves: , tarjeta, 0, p, div, de, transform, class, interior, width, Puntero al Archivo: almacenInvestigaciones\prueba.txt
+prueba => Título: prueba.txt, Autor: yo, Palabras Claves: , tarjeta, 0, p, div, de, transform, class, interior, width, Puntero al Archivo: almacenInvestigaciones\prueba.txt
