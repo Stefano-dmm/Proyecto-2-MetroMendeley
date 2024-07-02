@@ -1,0 +1,2 @@
+prueba => Título: prueba.txt, Autor: yo, Palabras Claves: , tarjeta, 0, p, div, de, transform, class, interior, width, Puntero al Archivo: almacenInvestigaciones\prueba.txt
+pppp => Título: pppp.txt, Autor: yo, Palabras Claves: , Puntero al Archivo: almacenInvestigaciones\pppp.txt
