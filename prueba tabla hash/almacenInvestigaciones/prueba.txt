@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tarjeta de Felicitaciones Animada</title>
+  <style>
+    /* Estilos básicos */
+    body {
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f0f0f0;
+    }
+
+    #tarjeta {
+      width: 600px;
+      height: 400px;
+      background-color: #fff;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+      position: relative;
+      perspective: 400px;
+      transition: transform 0.5s ease-in-out;
+    }
+
+    #tarjeta.abierta {
+      transform: rotateY(-90deg);
+    }
+
+    #tarjeta .interior {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      transform: rotateY(180deg);
+      transition: transform 0.5s ease-in-out;
+    }
+
+    #tarjeta.abierta .interior {
+      transform: rotateY(0deg);
+    }
+
+    #tarjeta .frente {
+      background-color: #e0e0e0;
+      padding: 20px;
+      text-align: center;
+    }
+
+    #tarjeta .mensaje {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    #tarjeta .firma {
+      font-size: 16px;
+      margin-top: 20px;
+    }
+
+    #tarjeta .interior .contenido {
+      background-color: #fff;
+      padding: 20px;
+    }
+
+    /* Animación al hacer clic */
+    #tarjeta:hover {
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="tarjeta">
+    <div class="frente">
+      <h2 class="mensaje">¡Felicidades!</h2>
+      <p class="firma">De parte de Bard</p>
+    </div>
+    <div class="interior">
+      <div class="contenido">
+        <p>¡Te deseo un día lleno de alegría y felicidad! </p>
+        <p>Espero que este día sea especial para ti y que lo llenes de momentos inolvidables.</p>
+        <p>¡Un fuerte abrazo! </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Detecta el clic en la tarjeta
+    const tarjeta = document.getElementById('tarjeta');
+    tarjeta.addEventListener('click', () => {
+      // Cambia la clase para abrir la tarjeta
+      tarjeta.classList.toggle('abierta');
+    });
+  </script>
+</body>
+</html>
